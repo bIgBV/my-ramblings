@@ -1,0 +1,375 @@
+/* Layout
+============================================================*/
+
+/* Setting border-box properties */
+*, *:before, *:after {
+	-moz-box-sizing : border-box;
+	-webkit-box-sizing : border-box;
+	box-sizing : border-box;
+}
+
+/* setting small screens as default */
+html {
+	font-size: 100%/1.5 ;
+	font-weight: 400;
+	-webkit-font-smoothing : antialiased;
+}
+
+/* For medium sized screens 640px */
+@media screen and (min-width: 40rem) {
+	html {
+		font-size: 112%;
+	}	
+}
+
+/* For larger screens 1024px */
+@media screen and (min-width: 64rem) {
+	html {
+		font-size: 120%;
+	}	
+}
+
+body {
+	background-color: #263248;
+	color: #FFFFFF;
+}
+
+.container {
+	margin: 0 auto;
+	max-width: 53rem;
+	width: 90%;
+}
+
+/* Header
+ =========================================================*/
+ header {
+ 	background-color: #000000;
+ 	text-align: center;
+ }
+
+ .heading {
+ 	margin: 2rem 0;
+ }
+
+ @media (min-width: 40rem) {
+ 	.heading {
+ 		margin: 6rem 0;
+ 	} 	
+ }
+
+ .heading h1{
+ 	color: #FFFFFF;
+ 	text-transform: uppercase;
+ 	padding: .4rem .6rem;
+ 	font-size: 1.8rem;
+ 	display: inline-block;
+ 	border-bottom: 3px #FFFFFF dashed;
+ 	margin-bottom: .2rem;
+ }
+
+ /* Section
+  ========================================================= */
+section {
+	margin: 0 auto;
+	max-width: 60rem;
+	text-align: center;
+	padding: 1.5rem 0;
+}
+
+
+section:first-of-type {
+ 	border-top: none;
+}
+
+@media (min-width: 40rem) {
+ 	section {
+ 		padding: 2.5rem 0;
+	}  	
+}
+
+ /* Mobile-first grid
+  ========================================================= */
+
+.column {
+ 	margin-bottom: 1.5rem;
+ 	margin-left: 1rem;
+ 	margin-right: 1rem;
+ }
+
+@media (min-width: 40rem) {
+	.column {
+		float: left;
+		margin: 0;
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
+	.column.full {
+		width: 100%
+	}	
+	.column.half{
+		width: 50%;
+	}
+	.column.two-thirds{
+		width: 66.7%;
+	}
+	.column.thirds{
+		width: 33.3%;
+	}
+	.column.fifth{
+		width: 20%;
+	}
+	.column.three-fifth {
+		width: 60%;
+	}
+	.column.eigth{
+		width: 16.66666%;
+	}
+	.column.seven-eigth{
+		width: 83.333334%;
+	}
+	.column.flow-opposite{
+		float: right;
+	}
+
+}
+
+@media (max-width: 40rem) {
+	.column {
+		margin: 0.5rem;
+	}
+
+	.nav {
+		margin: 0.5rem;
+	}
+}
+
+/* Typography 
+ =========================================================== */
+
+ h1, h2, h3, h4, h5 {
+ 	text-align: left;
+ 	font-weight: 600;
+ 	margin: 0;
+ }
+
+ h1 {
+ 	font-size: 1.3rem;
+ 	line-height: 1.3rem;
+ 	margin-bottom: 1.5rem;
+ }
+
+ a h2 {
+ 	color: #FF9800;
+ }
+
+ @media (min-width: 40rem) {
+ 	h1 {
+ 		font-size: 1.5rem;
+ 		line-height: 1rem;
+ 	} 	
+ }
+
+ h3 {
+ 	font-size: 1.2rem;
+ 	margin-bottom: .5rem;
+ }
+
+ h2 {
+ 	text-align: left;
+ 	margin: 0.4rem;
+ }
+
+ p {
+ 	font-size: .86rem;
+ 	color: #F5F5F5;
+ 	margin: 0 auto;
+ 	max-width: 40rem;
+ 	padding: .4rem 0 .4rem 0;
+ 	text-align: left;
+ }
+
+ blockquote {
+ 	border-left: 3px solid #FF6E6E;
+ 	margin: 0;
+ 	font-style: italic;
+ 	color: #1A1A1A;
+ 	margin-bottom: 1.5rem;
+ }
+
+ul, ol {
+	text-align: left;
+	font-size: 0.90rem;
+}
+
+ p + ul, ol {
+ 	text-align: left;
+ 	font-size: 0.85rem;
+ 	width: 85%;
+ 	margin: 0 auto;
+ 	color: #F5F5F5
+ }
+
+a, a:focus, a:visited {
+ 	color: #7E8AA2;
+ 	text-decoration: none;
+ }
+
+ a:hover {
+ 	text-decoration: underline;
+ 	cursor: pointer;
+ }
+
+ div pre code {
+ 	font-size: 0.70rem;
+ 	text-align: left;
+ 	width: 100%;
+ 	margin: 0 auto;
+ }
+
+ small {
+ 	text-align: left;
+ }
+
+ small {
+ 	color: rgba(255, 255, 255, 0.5);
+ }
+
+
+ /* Navigation
+  ========================================================= */
+.nav-collapse ul {
+ 	list-style-type: none;
+ 	margin: 0 auto;
+ 	text-align: left;
+ }
+
+.nav-collapse li:hover {
+	background: #FFFFFF;
+}
+
+@media (max-width: 40rem) {
+	.nav-collapse li {
+		background-color: #FFFFFF;
+		border: none;
+		padding: 0.5rem;
+	}
+
+	.nav-toggle {
+		  -moz-appearance: none;
+		  -webkit-appearance: none;
+		  appearance: none;
+		  background-color: #FFFFFF;
+		  border: none;
+		  color: #000000;
+		  cursor: pointer;
+		  display: block;
+		  margin: 0.5rem auto;
+		  font-size: 1rem;
+		  font-weight: 600;
+		  padding: 0.4rem 1.2rem;
+		  vertical-align: middle;
+		  white-space: nowrap;
+	}
+}
+/* Buttons
+ ======================================================= */
+ .button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #F22727;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  margin: 0.5rem auto;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.4rem 1.2rem;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+@media (min-width: 40rem) {
+  .button {
+    display: inline-block;
+    font-size: 0.9rem;
+  }
+}
+
+hr {
+  border: 0;
+  border-top: 0px solid #ddd;
+  margin: 0.1rem auto;
+  width: 5rem;
+}
+
+#toggle img {
+	height: 5%;
+	width: 5%;
+}
+
+@media (max-width: 40rem) {
+	#toggle img {
+		height: 50px;
+		width: 50px;
+	}
+}
+
+/* Editor
+ ===================================================== */
+
+ textarea{
+ 	width: 100%;
+ 	height: 20rem;
+ 	margin-bottom: 2rem;
+ 	background-color: #263248;
+ 	padding: 0.8em;
+ }
+
+ #subject-title {
+ 	width: 100%;
+ 	padding: 0.5em;
+ 	background-color: #263248;
+ }
+
+#tags {
+	width: 38rem;
+	padding: 0.5em;
+	background-color: #263248;
+}
+
+textare:focus {
+	box-shadow: rgba(0,0,0,0.2) 0px 2px 3px, inset rgba(0,0,0,0.2) 0px -1px 2px;
+    border-radius: 20px;	
+}
+
+ @media (min-width: 40rem) {
+ 	textarea {
+ 		width: 40rem;
+ 		height: 20rem;
+ 	}
+ 	#subject-title {
+ 		width: 43rem;
+ 	}
+ }
+
+
+ /* Clearfix by Nicolas Gallagher
+   ========================================================================== */
+
+.clearfix:before,.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+ clear: both; 
+}
+
+.clearfix { 
+	*zoom: 1; 
+}
+
+/* Color theme credit https://kuler.adobe.com/1944mustang-color-theme-4817/ */

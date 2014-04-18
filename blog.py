@@ -294,6 +294,63 @@ def valid_email(email):
     return not email or EMAIL_RE.match(email)
 #need to re implement the entire signup page
 
+class SignupHandler(BaseHandler):
+    def get(self):
+        self.render('signup-form.html')
+
+    def post(self):
+        username = self.request.get('username')
+        password = self.request.get('password')
+        verify = self.request.get('verify')
+        email = self.request.get('email')
+
+        has_error = False
+        error = {}
+
+        if username:
+            if valid_username(username):
+                pass
+            else:
+                has_error = True
+                error["error_username"] = "Invalid username"
+                self.render('signup-form.html', username = username, error_username = error["error_username"])
+        else:
+            has_error = True
+            error["error_username"] = "Enter a username"
+            self.render('signup-form.html', username = username, error_username = error["error_username"])
+
+
+        if password or verify:
+            if valid_password(password):
+                pass
+            else:
+                has_error = True
+                error["error_password"] = "Enter a valid password"
+                self.render('signup-form.html', username = username, error_password = error["error_password"])
+        if password != verify:
+            has_error = True
+            error["error_password"] = "Passowords do not match"
+            self.render('signup-form.html', username = username, error_password = error["error_password"])
+
+        if email:
+            if valid_email(email):
+                pass
+            else:
+                error["error_email"] = "enter a valid email"
+                self.render('signup-form.html', username = username, error_email = error["error_email"])
+
+        if has_error == False:
+            if email:
+                user = Users(username = username, pw_hash = make_pw_h(username, password) ,email = email)
+            else:
+                user = Users(username = username, pw_hash = make_pw_h(username, password))
+
+            user.put()
+            self.set_sec_coki('user-id', user.key().id())
+            self.redirect('/blog')
+
+
+
 
 #This class takes care of the login funcionalities for the user
 class Login(BaseHandler):
@@ -463,7 +520,8 @@ app = webapp2.WSGIApplication([('/',HomePage),
                                ('/archive', ArchiveManager),
                                ('/blog/newpost', Newpost),
                                ('/blog/(\d+)',Permalink),
-                               ('/blog/_adim/login', Login),
+                               ('/blog/_admin/signup', SignupHandler),
+                               ('/blog/_admin/login', Login),
                                ('/logout', Logout),
                                ('/blog.json',JSONMainPageHandler),
                                ('/blog/(\d+).json', JSONPermalinkHandler),
