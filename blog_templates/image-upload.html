@@ -1,0 +1,13 @@
+{% extends "blogbase.html" %}
+
+{% block content %}
+  <form enctype="multipart/form-data" method="post">
+    <div class="column">
+      Title : <input type="text" id="subject-title" name="img-name" />
+    </div>
+      <div class="column">
+        <input type="file" id="subject-title" name="img" />
+      </div>
+    <input class="button" type="submit" id="submit">
+  </form>
+{% endblock %}

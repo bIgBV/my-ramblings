@@ -1,0 +1,19 @@
+{% extends "blogbase.html" %}
+
+{% block content %}
+
+	<div class="column two-thirds">
+			<h2>{{subject}}</h2>
+	</div>
+	<div class="column thirds">
+		<small>
+			{{day.strftime("%d %b %Y")}}
+		</small>
+	</div>
+	<div class="column">
+		<p>
+			{{blog}}
+		</p>
+	</div>	
+{% endblock %}
+

@@ -1,0 +1,15 @@
+{% extends "blogbase.html" %}
+
+{% block content%}
+    {% for post in posts%}
+      <div class="column full">        
+            <ul class="archive">
+                <li>
+                    <a href = "/blog/{{post.key().id()}}" target="_blank">
+                    {{post.subject}}
+                    </a>                    
+                </li>
+            </ul>
+        </div>
+    {% endfor %}
+{% endblock %}

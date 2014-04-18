@@ -1,0 +1,53 @@
+{% extends "blogbase.html" %}
+
+{% block content %}
+  <form class="submit_form" method = "post"> 
+      <div class="container">
+          <div class="column full">   
+              <div>
+              	<h2>Subject</h2>
+              <div>
+              <input type="text" id="subject-title" name="subject" value="{{subject}}">
+          </div>        
+          <div class="column full">
+              <div>
+              	<h2>Blogpost</h2>
+              </div>
+            <div class="column">
+                <textarea rows="" name="content">
+                    {{text}}
+                </textarea>
+            </div>
+            <div class="column">
+                <div class="preview">
+                  This is where the preview of your post appears
+                </div>     
+            </div>
+
+            <div class="container">
+			        <div class="column">
+			          <div>
+			            <h2>Tags</h2>
+			          </div>
+			          <input type="text" id="tags" name="tags" value="{{tags}}">
+			        </div>
+			      </div>
+
+          </div>
+          <div class="column">                             
+              <input type="submit" class="button">
+          </div>
+      </div>
+  </form>
+  <div class="container">
+    <div class="column">
+      Word count :
+      <div class="length">
+        
+      </div>
+    </div>
+    <div class="error">
+        {{error}}
+    </div>
+  </div>
+{% endblock %}
