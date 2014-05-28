@@ -189,11 +189,18 @@ class Mainpage(BaseHandler):
     def get(self):
         posts = Blog_posts()
         userLogin, name = self.check_user()
+        # Creating a dictionary of jinja2 parameters
+        params = {
+            'posts': posts,
+            'userLogin': userLogin,
+            'user_name': name,
+        }
 
         if userLogin == True and name:
-            self.render("blog.html", posts = posts, userLogin = userLogin, user_name = name)
+            self.render("blog.html", **params)
         else:
-            self.render("blog.html", posts = posts, userLogin = userLogin, user_name = "")
+            params['user_name'] = ""
+            self.render("blog.html", **params)
 
 
 #this class handles the newpost page which is  
@@ -210,14 +217,18 @@ class Newpost(BaseHandler):
     def render_form(self, subject="", blog="", error=""): 
         userLogin, name = self.check_user()
         if userLogin == True and name:
-            self.render("submit.html", subject = subject, blog = blog, error = error, userLogin = userLogin, user_name = name)
-        else:
-            self.render("blog.html", subject = subject, blog = blog, error = error, userLogin = userLogin, user_name = "")
+            params = {
+                'subject': subject,
+                'blog': blog,
+                'error': error,
+                'userLogin': userLogin,
+                'user_name': name,
+            }
+            self.render("submit.html", **params)
 
     #this is just the function which responds to the GET call
     def get(self):
         cookieVal = self.request.cookies.get('user-id')
-        logging.debug(cookieVal)
         if cookieVal == None:
             self.redirect('/blog')
         else :
@@ -252,38 +263,63 @@ class Newpost(BaseHandler):
 class Permalink(BaseHandler):
     def get(self, post_id):        
         userLogin, name = self.check_user()
-        #Creating a memcache entry with key as post id
+
+        #Checing if the post is in the cache
+
         key = post_id
         part_post = memcache.get(key)
         if part_post : 
             post_sub = part_post.subject
             post_blog = part_post.blog
             post_date = part_post.day_created
+            params = {
+                'subject': post_sub,
+                'blog': post_blog,
+                'id': post_id,
+                'day': post_date,
+                'userLogin': userLogin,
+                'user_name': name,
+                'post_id': post_id,
+
+            }
             if userLogin == True and name:
-                self.render("link.html", subject = post_sub, blog = post_blog, id = post_id, day = post_date, 
-                    userLogin = userLogin, user_name = name, post_id = post_id)
+                self.render("link.html", **params)
             else:
-                self.render("link.html", subject = post_sub, blog = post_blog, id = post_id, day = post_date,
-                        userLogin = userLogin, user_name = "", post_id = post_id)
+                params['user_name'] = ""
+                self.render("link.html", **params)
                 
-        else:  
+        else:
+
+        #Creating a memcache entry with key as post id          
+
             part_post = Blog.get_by_id(int(post_id))
             post_sub = part_post.subject
             post_blog = part_post.blog
             post_date = part_post.day_created
             memcache.set(key, part_post)
-            #self.redirect('/blog/%s' % int(post_id))
+            params = {
+                'subject': post_sub,
+                'blog': post_blog,
+                'id': post_id,
+                'day': post_date,
+                'userLogin': userLogin,
+                'user_name': name,
+                'post_id': post_id,
+
+            }
             if userLogin == True and name:
-                self.render("link.html", subject = post_sub, blog = post_blog, id = post_id, day = post_date,
-                    userLogin = userLogin, user_name = name, post_id = post_id)
+                self.render("link.html", **params)
             else:
-                self.render("link.html", subject = post_sub, blog = post_blog, id = post_id, day = post_date,
-                        userLogin = userLogin, user_name = "", post_id = post_id)
+                params['user_name'] = ""
+                self.render("link.html", **params)
 
 
 USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
 def valid_username(username):
-    return username and USER_RE.match(username)
+    if Users.all().filter('name = ', username).get():
+        return False
+    else:
+        return username and USER_RE.match(username)
 
 PASS_RE = re.compile(r"^.{3,20}$")
 def valid_password(password):
@@ -307,17 +343,22 @@ class SignupHandler(BaseHandler):
         has_error = False
         error = {}
 
+        params = {
+            'username': username,
+            'error':"",
+        }
+
         if username:
             if valid_username(username):
                 pass
             else:
                 has_error = True
-                error["error_username"] = "Invalid username"
-                self.render('signup-form.html', username = username, error_username = error["error_username"])
+                params[error["error_username"]] = "Invalid username"
+                self.render('signup-form.html', **params)
         else:
             has_error = True
-            error["error_username"] = "Enter a username"
-            self.render('signup-form.html', username = username, error_username = error["error_username"])
+            params[error["error_username"]] = "Enter a username"
+            self.render('signup-form.html', **params)
 
 
         if password or verify:
@@ -325,19 +366,19 @@ class SignupHandler(BaseHandler):
                 pass
             else:
                 has_error = True
-                error["error_password"] = "Enter a valid password"
-                self.render('signup-form.html', username = username, error_password = error["error_password"])
+                params[error["error_password"]] = "Enter a valid password"
+                self.render('signup-form.html', **params)
         if password != verify:
             has_error = True
-            error["error_password"] = "Passowords do not match"
-            self.render('signup-form.html', username = username, error_password = error["error_password"])
+            params[error["error_password"]] = "Passwords do not match"
+            self.render('signup-form.html', **params)
 
         if email:
             if valid_email(email):
                 pass
             else:
-                error["error_email"] = "enter a valid email"
-                self.render('signup-form.html', username = username, error_email = error["error_email"])
+                params[error["error_email"]] = "enter a valid email"
+                self.render('signup-form.html', **params)
 
         if has_error == False:
             if email:
@@ -432,10 +473,16 @@ class ArchiveManager(BaseHandler):
     def get(self):
         posts = Blog_posts()
         userLogin, name = self.check_user()
+        params = {
+            'posts': posts,
+            'userLogin': userLogin,
+            'user_name': name,
+        }
         if userLogin == True and name:
-            self.render("archive.html", posts = posts, userLogin = userLogin, user_name = name)
+            self.render("archive.html", **params)
         else:
-            self.render("archive.html", posts = posts, userLogin = userLogin, user_name = "")
+            params['user_name']= ""
+            self.render("archive.html", **params)
 
 class Editor(BaseHandler):
     # Getting the particular post from the database by the GET parameters
@@ -475,11 +522,18 @@ class TagsHandler(BaseHandler):
     def get(self):
         userLogin, name = self.check_user()
         tags = self.request.GET["tag"]
-        posts = db.GqlQuery(" SELECT * FROM Blog WHERE tags = :1", tags)
+        posts = db.GqlQuery(" SELECT * FROM Blog WHERE tags = :1 ORDER BY time_created DESC", tags)
+        params = {
+            'posts': posts,
+            'userLogin': userLogin,
+            'name': name,
+            'tag': tags,
+        }
         if userLogin == True and name:
-            self.render("tags.html", posts = posts, userLogin = userLogin, name = name, tag = tags)
+            self.render("tags.html", **params)
         else:
-            self.render("tags.html", posts = posts, userLogin = userLogin, name = "", tag = tags)
+            params['user_name'] = ""
+            self.render("tags.html", **params)
 
 class ImageUploader(BaseHandler):
     def get(self):

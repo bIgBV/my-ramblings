@@ -9,5 +9,5 @@ var markedDown = function () {
     });
     String.prototype.countWords = function(){
  		 return this.split(/\s+\b/).length;
-}
+	}
 }
