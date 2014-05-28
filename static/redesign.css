@@ -30,8 +30,8 @@ html {
 }
 
 body {
-	background-color: #263248;
-	color: #FFFFFF;
+	background-color: #fdf6e3;
+	color: #586e75;
 }
 
 .container {
@@ -43,11 +43,12 @@ body {
 /* Header
  =========================================================*/
  header {
- 	background-color: #000000;
+ 	background-image: url('/static/images/header.svg');
  	text-align: center;
  }
 
  .heading {
+ 	padding-bottom: 10rem;
  	margin: 2rem 0;
  }
 
@@ -58,7 +59,7 @@ body {
  }
 
  .heading h1{
- 	color: #FFFFFF;
+ 	color: #`;
  	text-transform: uppercase;
  	padding: .4rem .6rem;
  	font-size: 1.8rem;
@@ -92,8 +93,7 @@ section:first-of-type {
 
 .column {
  	margin-bottom: 1.5rem;
- 	margin-left: 1rem;
- 	margin-right: 1rem;
+ 	margin: 0 auto;
  }
 
 @media (min-width: 40rem) {
@@ -160,7 +160,7 @@ section:first-of-type {
  }
 
  a h2 {
- 	color: #FF9800;
+ 	color: #268bd2;
  }
 
  @media (min-width: 40rem) {
@@ -178,15 +178,20 @@ section:first-of-type {
  h2 {
  	text-align: left;
  	margin: 0.4rem;
+ 	color: #268bd2;
  }
 
  p {
  	font-size: .86rem;
- 	color: #F5F5F5;
+ 	color: #000000;
  	margin: 0 auto;
  	max-width: 40rem;
  	padding: .4rem 0 .4rem 0;
  	text-align: left;
+ }
+
+ p code {
+ 	color: #dc322f;
  }
 
  blockquote {
@@ -207,11 +212,11 @@ ul, ol {
  	font-size: 0.85rem;
  	width: 85%;
  	margin: 0 auto;
- 	color: #F5F5F5
+ 	color: #000000;
  }
 
 a, a:focus, a:visited {
- 	color: #7E8AA2;
+ 	color: #2aa198;
  	text-decoration: none;
  }
 
@@ -232,7 +237,7 @@ a, a:focus, a:visited {
  }
 
  small {
- 	color: rgba(255, 255, 255, 0.5);
+ 	color: #000000;
  }
 
 
@@ -325,18 +330,25 @@ hr {
  	height: 20rem;
  	margin-bottom: 2rem;
  	background-color: #263248;
+ 	color: #FFFFFF;
  	padding: 0.8em;
+ }
+
+ .preview {
+ 	text-align: left;
  }
 
  #subject-title {
  	width: 100%;
  	padding: 0.5em;
+ 	color: #FFFFFF;
  	background-color: #263248;
  }
 
 #tags {
 	width: 38rem;
 	padding: 0.5em;
+	color: #FFFFFF;
 	background-color: #263248;
 }
 

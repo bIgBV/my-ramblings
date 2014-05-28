@@ -43,6 +43,10 @@ def markDown(to_mark):
      marked_down = response.read().decode('utf8') #no idea why this works, will have to look it up
      return marked_down
 
+#Creating a function for slicing the first 100 characters of the blog
+def slice_post(post):
+    return post[:150]
+
 #this is where the database is created. GAE running on python
 #needs a class to be defined inheriting the db.model method/class
 class Blog(db.Model):
@@ -180,9 +184,6 @@ def Blog_posts(Update = False):
         memcache.set(key, posts)
     return posts
 
-#Creating a function for slicing the first 100 characters of the blog
-def slice_post(post):
-    return post[:150]
 
 #Straight up querying up blog posts and displaying them
 class Mainpage(BaseHandler):
