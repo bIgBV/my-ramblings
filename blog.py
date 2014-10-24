@@ -18,6 +18,8 @@ logging.getLogger().setLevel(logging.DEBUG)
 from google.appengine.ext import db
 from google.appengine.api import memcache
 from google.appengine.api import images
+from lib import markdown2
+
 import secret
 
 secret = secret.secret
@@ -29,19 +31,8 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
 
 #this function uses the Github's markdown api to apply markdown on the post for the blog
 def markDown(to_mark):
-     headers = {
-         'content-type': 'application/json'
-     }
-     #text = to_mark.decode('utf8')
-     payload = {
-         'text': to_mark,
-         'mode':'gfm'
-     }
-     data = json.dumps(payload)
-     req = urllib2.Request('https://api.github.com/markdown', data, headers)
-     response = urllib2.urlopen(req)
-     marked_down = response.read().decode('utf8') #no idea why this works, will have to look it up
-     return marked_down
+    return markdown2.markdown(to_mark)
+     
 
 #Creating a function for slicing the first 100 characters of the blog
 def slice_post(post):
