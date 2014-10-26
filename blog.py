@@ -431,7 +431,8 @@ class JSONMainPageHandler(BaseHandler):
              json_data["post{}".format(index)] = {
                  'subject': post.subject,
                  'content': post.blog,
-                 'day'    : post.day_created.strftime('%d %b %Y')
+                 'day'    : post.day_created.strftime('%d %b %Y'),
+                 'tags'   : post.tags
              }
 
          json_text = json.dumps(json_data)        
